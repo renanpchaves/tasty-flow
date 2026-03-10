@@ -4,7 +4,9 @@ from modelos.cardapio.prato import Prato
 
 restaurante_horacio = Restaurante('Horacios Pizzeria', 'Pizza')
 bebida1 = Bebida('Suco de Laranja', 5.0, 'Grande')
+bebida1.desconto()
 prato1 = Prato('Lasanha', 20.0, 'Bolonhesa')
+prato1.desconto()
 restaurante_horacio.adicionar_no_cardapio(bebida1)
 restaurante_horacio.adicionar_no_cardapio(prato1)
 
