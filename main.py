@@ -1,14 +1,14 @@
 from fastapi import FastAPI, HTTPException
 import requests
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from modelos.restaurante import Restaurante
 
 app = FastAPI(title="Tasty Flow API", version="1.0")
 
 
 class RestauranteCriar(BaseModel):
-    nome: str
-    categoria: str
+    nome: str = Field(..., min_length=2, max_length=100)
+    categoria: str = Field(...,min_length=2, max_length=50)
 
 
 # ======= ROTAS GET =======
@@ -21,10 +21,11 @@ def root():
     """
     return {
         "mensagem": "Api do app Tasty Flow está rodando normalmente.",
+        "versao": "1.0",
         "endpoints": [
             "GET /restaurantes/ - Lista todos os restaurantes",
             "GET /restaurantes/{nome} - Busca restaurante específico",
-            "//TBD POST /restaurantes/ - Cria novo restaurante//",
+            "POST /restaurantes/ - Cria novo restaurante",
         ],
     }
 
@@ -35,7 +36,7 @@ def listar_restaurantes():
     Lista todos os restaurantes do app
     """
     if not Restaurante.restaurantes:
-        return {"Restaurantes": [], "total": 0}
+        return {"restaurantes": [], "total": 0}
 
     restaurantes_lista = [r.to_dict() for r in Restaurante.restaurantes]
     return {"restaurantes": restaurantes_lista, "total": len(restaurantes_lista)}
@@ -50,7 +51,7 @@ def buscar_restaurante(nome: str):
 
     if not restaurante:
         raise HTTPException(
-            status_code=404, detail=f'Restauirante "{nome}" não foi encontrado.'
+            status_code=404, detail=f'Restaurante "{nome}" não foi encontrado.'
         )
 
     return restaurante.to_dict()
