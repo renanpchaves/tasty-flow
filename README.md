@@ -10,9 +10,12 @@ tasty-flow/
 │   ├── avaliacao.py            # Sistema de avaliações
 │   └── cardapio/
 │       ├── item_cardapio.py    # Classe abstrata base
-│       ├── bebida.py           # Itens tipo bebida
-│       ├── prato.py            # Itens tipo prato
-│       └── sobremesa.py        # Itens tipo sobremesa
+│       ├── bebida.py           # Classes para bebidas
+│       ├── prato.py            # Classes para pratos principais
+│       └── sobremesa.py        # Classes para sobremesas
+├── schemas/
+│   ├── restaurante.py          # Schemas Pydantic (entrada e saída da API)
+│ 
 ├── main.py                     # Aplicação FastAPI
 └── README.md
 ```
