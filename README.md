@@ -31,6 +31,8 @@ tasty-flow/
 | POST | `/restaurantes/{nome}/cardapio/bebida` | Adiciona bebida (não implementado) |
 | POST | `/restaurantes/{nome}/cardapio/prato` | Adiciona prato (não implementado) | 
 | POST | `/restaurantes/{nome}/cardapio/sobremesa` | Adiciona sobremesa (não implementado) |
+
+
 Ainda construindo!
 
 ### Restaurantes
