@@ -11,7 +11,7 @@ class RestauranteResponse(BaseModel):
     categoria: str = Field(..., min_length=2, max_length=50)
     ativo: bool
     avaliacao_media: float
-    total_avaliacoes: int
+    avaliacao_total: int
 
     model_config = {"from_attributes": True}
 

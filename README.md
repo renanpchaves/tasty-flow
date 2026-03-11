@@ -21,12 +21,16 @@ tasty-flow/
 ```
 
 ## 🔌 Endpoints
+
 | Método | Endpoint | Descrição |
 |--------|----------|-----------|
+| GET | `/restaurantes/`                | Visualiza restaurantes |
+| GET | `/restaurantes/{nome}`          | Visualiza restaurante por nome |
 | GET | `/restaurantes/{nome}/cardapio` | Visualiza cardápio completo |
-| POST | `/restaurantes/{nome}/cardapio/bebida` | Adiciona bebida |
-| POST | `/restaurantes/{nome}/cardapio/prato` | Adiciona prato |
-| POST | `/restaurantes/{nome}/cardapio/sobremesa` | Adiciona sobremesa |
+| POST | `/restaurantes/`               | Adiciona um novo restaurante |
+| POST | `/restaurantes/{nome}/cardapio/bebida` | Adiciona bebida | <- ainda não implementado
+| POST | `/restaurantes/{nome}/cardapio/prato` | Adiciona prato | <- ainda não implementado
+| POST | `/restaurantes/{nome}/cardapio/sobremesa` | Adiciona sobremesa | <- ainda não implementado
 
 Ainda construindo!
 

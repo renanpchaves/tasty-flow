@@ -36,11 +36,11 @@ class Restaurante:
         return self._categoria
     
     @property
-    def total_avaliacoes(self):
+    def avaliacao_total(self):
         return len(self._avaliacao)
     
     @property
-    def media_avaliacoes(self):
+    def avaliacao_media(self):
         if not self._avaliacao:
             return 0.0
         soma_das_notas = sum(avaliacao._nota for avaliacao in self._avaliacao)
