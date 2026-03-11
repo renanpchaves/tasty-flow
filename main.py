@@ -8,7 +8,7 @@ app = FastAPI(title="Tasty Flow API", version="1.0")
 
 class RestauranteCriar(BaseModel):
     nome: str = Field(..., min_length=2, max_length=100)
-    categoria: str = Field(...,min_length=2, max_length=50)
+    categoria: str = Field(..., min_length=2, max_length=50)
 
 
 # ======= ROTAS GET =======
@@ -38,7 +38,7 @@ def listar_restaurantes():
     if not Restaurante.restaurantes:
         return {"restaurantes": [], "total": 0}
 
-    restaurantes_lista = [r.to_dict() for r in Restaurante.restaurantes]
+    restaurantes_lista = [r.__dict__ for r in Restaurante.restaurantes]
     return {"restaurantes": restaurantes_lista, "total": len(restaurantes_lista)}
 
 
@@ -54,7 +54,7 @@ def buscar_restaurante(nome: str):
             status_code=404, detail=f'Restaurante "{nome}" não foi encontrado.'
         )
 
-    return restaurante.to_dict()
+    return restaurante.__dict__
 
 
 # ======= ROTAS POST =======
@@ -77,5 +77,5 @@ def criar_restaurante(dados: RestauranteCriar):
 
     return {
         "mensagem": "Restaurante criado com sucesso!",
-        "restaurante": novo_restaurante.to_dict(),
+        "restaurante": novo_restaurante.__dict__,
     }

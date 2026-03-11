@@ -37,16 +37,16 @@ class Restaurante:
                 return restaurante
         return None
 
-    def to_dict(self):
-        """
-        Converte o restaurante para JSON
-        """
-        return {
-            "nome": self._nome,
-            "categoria": self._categoria,
-            "ativo": self._ativo,
-            "avaliacao_media": self.media_avaliacoes,
-        }
+    # def to_dict(self):
+    #     """
+    #     Converte o restaurante para JSON
+    #     """
+    #     return {
+    #         "nome": self._nome,
+    #         "categoria": self._categoria,
+    #         "ativo": self._ativo,
+    #         "avaliacao_media": self.media_avaliacoes,
+    #     }
 
     @property
     def ativo(self):
