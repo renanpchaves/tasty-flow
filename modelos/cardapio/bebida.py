@@ -13,3 +13,13 @@ class Bebida(ItemCardapio):
     def desconto(self):
         self._preco -= (self._preco * 0.08)
         return super().desconto()
+    
+    # ===== PYDANTIC (to_dict()) =====
+
+    @property
+    def nome(self):
+        return self._nome
+    
+    @property
+    def preco(self):
+        return self._preco

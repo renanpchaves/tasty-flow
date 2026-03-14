@@ -53,6 +53,7 @@ class Restaurante:
         return self._ativo
     
     # ===== MÉTODOS DE NEGÓCIO =====
+
     def alternar_estado(self):
         self._ativo = not self._ativo
 
@@ -65,7 +66,7 @@ class Restaurante:
         if isinstance(item, ItemCardapio):
             self._cardapio.append(item)
 
-    # Antigos metodos para exibir cardapio no app.py, antes de evoluir pra API.
+    # Antigos metodos para exibir cardapio no app.py enquanto tava testando a aplicaçao, antes de evoluir pra FastAPI.
     # @classmethod
     # def listar_restaurantes(cls):
     #     print(

@@ -1,16 +1,21 @@
 from fastapi import FastAPI, HTTPException
-import requests
 from schemas.restaurante import (
     RestauranteCriar,
     RestauranteResponse,
     RestauranteCriadoResponse,
 )
+from schemas.bebida import (
+    BebidaCriar,
+    BebidaResponse
+)
 from modelos.restaurante import Restaurante
+from modelos.cardapio.bebida import Bebida
 
 app = FastAPI(title="Tasty Flow API", version="1.0")
 
-# ======= ROTAS GET =======
+# ================================= ROTAS GET =================================
 
+# ===== PAGINA INICIAL =====
 
 @app.get("/")
 def root():
@@ -27,6 +32,7 @@ def root():
         ],
     }
 
+# ===== GET TODOS RESTAURANTES =====
 
 @app.get("/restaurantes/")
 def listar_restaurantes():
@@ -39,6 +45,7 @@ def listar_restaurantes():
     restaurantes_lista = Restaurante.restaurantes
     return {"restaurantes": restaurantes_lista, "total": len(restaurantes_lista)}
 
+# ===== GET RESTAURANTE POR NOME =====
 
 @app.get("/restaurantes/{nome}", response_model=RestauranteResponse)
 def buscar_restaurante(nome: str):
@@ -54,9 +61,13 @@ def buscar_restaurante(nome: str):
 
     return restaurante
 
+# ===== GET CARDAPIO POR RESTAURANTE =====
 
-# ======= ROTAS POST =======
 
+
+# ================================= ROTAS POST =================================
+
+# ===== POST RESTAURANTE =====
 
 @app.post("/restaurantes/", response_model=RestauranteCriadoResponse)
 def criar_restaurante(dados: RestauranteCriar):
@@ -77,3 +88,37 @@ def criar_restaurante(dados: RestauranteCriar):
         "mensagem": "Restaurante criado com sucesso!",
         "restaurante": novo_restaurante,
     }
+
+# ===== POST PRATO =====
+
+
+
+# ===== POST BEBIDA =====
+
+@app.post("/restaurantes/{nome}/cardapio/bebida", response_model=BebidaResponse)
+def adicionar_bebida(nome:str, bebida_dados: BebidaCriar):
+    """
+    Adiciona uma bebida no cardápio
+    """
+    
+    restaurante = Restaurante.buscar_nome(nome)
+
+    #Validação
+    if not restaurante:
+        raise HTTPException(
+            status_code=404,
+            detail=f'Restaurante "{nome} não encontrado.'
+        )
+    
+    #Cria a bebida
+    nova_bebida = Bebida(
+        nome = bebida_dados.nome,
+        preco = bebida_dados.preco,
+        tamanho = bebida_dados.tamanho,
+        sabor = bebida_dados.sabor
+    )
+
+    restaurante.adicionar_no_cardapio(nova_bebida)
+    return nova_bebida
+
+# ===== POST SOBREMESA =====
