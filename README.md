@@ -28,6 +28,7 @@ tasty-flow/
 
 | Método | Endpoint | Descrição |
 |--------|----------|-----------|
+| GET | `/`                             | Informações da API, root |
 | GET | `/restaurantes/`                | Visualiza restaurantes |
 | GET | `/restaurantes/{nome}`          | Visualiza restaurante por nome |
 | GET | `/restaurantes/{nome}/cardapio` | Visualiza cardápio completo por restaurante |
@@ -37,16 +38,7 @@ tasty-flow/
 | POST | `/restaurantes/{nome}/cardapio/sobremesa` | Adiciona sobremesa (não implementado) |
 
 
-Ainda construindo!
-
-### Restaurantes
-
-| Método | Endpoint | Descrição |
-|--------|----------|-----------|
-| GET | `/` | Informações da API |
-| GET | `/restaurantes/` | Lista todos os restaurantes |
-| GET | `/restaurantes/{nome}` | Busca restaurante específico |
-| POST | `/restaurantes/` | Cria novo restaurante |
+Ainda construindo mais rotas!
 
 ## 🛠️ Tecnologias
 
