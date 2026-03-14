@@ -1,34 +1,34 @@
 from pydantic import BaseModel, Field
 
-# ======= NOVA BEBIDA =======
+# ======= NOVO PRATO =======
 
-class BebidaCriar(BaseModel):
+class PratoCriar(BaseModel):
     """
-    Schema da criaçao de bebida
+    Schema da criaçao do prato
     """
     nome: str = Field(...,min_length=2, max_length=100)
     preco: float = Field(..., gt=0, description="Preço deve ser maior que 0")
-    tamanho: str = Field(...,min_length=1, max_length=50)
-    sabor: str = Field(...,min_length=2, max_length=50)
+    descricao: str = Field(...,min_length=1, max_length=150)
+    categoria: str = Field(...,min_length=2, max_length=100)
 
     model_config = {
         "json_schema_extra": {
             "example": {
                 "nome": "Suco",
                 "preco": 8.50,
-                "tamanho": "500ml",
-                "sabor": "Laranja"
+                "descricao": "Descrição do prato principal",
+                "categoria": "Pizza"
             }
         }
     }
 
-class BebidaResponse(BaseModel):
+class PratoResponse(BaseModel):
     """
-    Schema de response da bebida
+    Schema de response do prato
     """
     nome:str
     preco:float
-    tamanho:str
-    sabor:str
+    descricao:str
+    categoria:str
 
     model_config = {"from_attributes": True}

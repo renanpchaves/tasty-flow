@@ -8,8 +8,13 @@ from schemas.bebida import (
     BebidaCriar,
     BebidaResponse
 )
+from schemas.prato import(
+    PratoCriar,
+    PratoResponse
+)
 from modelos.restaurante import Restaurante
 from modelos.cardapio.bebida import Bebida
+from modelos.cardapio.prato import Prato
 
 app = FastAPI(title="Tasty Flow API", version="1.0")
 
@@ -93,19 +98,20 @@ def buscar_cardapio(nome:str):
             "nome": item._nome,
             "preco": item._preco
         }
-
-        
-    #Identifica tipo e adiciona campo de acordo com o tipo no cardápio:
-    if hasattr(item, 'sabor'): #bebida
-        item_dict['tipo'] = 'Bebida'
-        item_dict['tamanho'] = item.tamanho
-        item_dict['sabor'] = item.sabor
-
-    cardapio_lista.append(item_dict)
+        #Identifica tipo e adiciona campo de acordo com o tipo no cardápio:
+        if hasattr(item, 'sabor'): #bebida
+            item_dict['tipo'] = 'Bebida'
+            item_dict['tamanho'] = item.tamanho
+            item_dict['sabor'] = item.sabor
+        elif hasattr(item, 'categoria'): #prato
+            item_dict['tipo'] = 'Prato Principal'
+            item_dict['descricao'] = item.descricao
+            item_dict['categoria'] = item.categoria
+        cardapio_lista.append(item_dict)
 
     return {
         "restaurante": restaurante._nome,
-        "cardapio": restaurante._cardapio,
+        "cardapio": cardapio_lista,
         "total_items": len(cardapio_lista)
     }
 
@@ -136,7 +142,31 @@ def criar_restaurante(dados: RestauranteCriar):
 
 # ===== POST PRATO =====
 
+@app.post("/restaurantes/{nome}/cardapio/prato", response_model=PratoResponse)
+def adicionar_prato(nome:str, prato_dados: PratoCriar):
+    """
+    Adiciona um prato principal ao cardápio
+    """
 
+    restaurante = Restaurante.buscar_nome(nome)
+
+    #Validação
+    if not restaurante:
+        raise HTTPException(
+            status_code=404,
+            detail = f'Restaurante "{nome}" não encontrado.'
+        )
+    
+    #Cria o prato principal
+    novo_prato = Prato(
+        nome = prato_dados.nome,
+        preco = prato_dados.preco,
+        descricao = prato_dados.descricao,
+        categoria = prato_dados.categoria
+    )
+
+    restaurante.adicionar_no_cardapio(novo_prato)
+    return novo_prato
 
 # ===== POST BEBIDA =====
 

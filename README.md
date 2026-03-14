@@ -29,7 +29,7 @@ tasty-flow/
 | GET | `/restaurantes/{nome}/cardapio` | Visualiza cardápio completo por restaurante |
 | POST | `/restaurantes/`               | Adiciona um novo restaurante |
 | POST | `/restaurantes/{nome}/cardapio/bebida` | Adiciona bebida |
-| POST | `/restaurantes/{nome}/cardapio/prato` | Adiciona prato (não implementado) | 
+| POST | `/restaurantes/{nome}/cardapio/prato` | Adiciona prato | 
 | POST | `/restaurantes/{nome}/cardapio/sobremesa` | Adiciona sobremesa (não implementado) |
 
 
