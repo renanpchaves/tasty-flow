@@ -63,6 +63,51 @@ def buscar_restaurante(nome: str):
 
 # ===== GET CARDAPIO POR RESTAURANTE =====
 
+@app.get("/restaurantes/{nome}/cardapio")
+def buscar_cardapio(nome:str):
+    """
+    Retorna o cardapio do restaurante, completo.
+    """
+
+    restaurante = Restaurante.buscar_nome(nome)
+
+    #Validação
+    if not restaurante:
+        raise HTTPException(
+            status_code=404,
+            detail = f'Restaurante {nome} não encontrado.'
+        )
+    
+    #Cardapio vazio?
+    if not restaurante._cardapio:
+        return {
+            "restaurante": restaurante.nome,
+            "cardapio": [],
+            "total_itens": 0
+        }
+    
+    #Lista do cardapio:
+    cardapio_lista = []
+    for item in restaurante._cardapio:
+        item_dict = {
+            "nome": item._nome,
+            "preco": item._preco
+        }
+
+        
+    #Identifica tipo e adiciona campo de acordo com o tipo no cardápio:
+    if hasattr(item, 'sabor'): #bebida
+        item_dict['tipo'] = 'Bebida'
+        item_dict['tamanho'] = item.tamanho
+        item_dict['sabor'] = item.sabor
+
+    cardapio_lista.append(item_dict)
+
+    return {
+        "restaurante": restaurante._nome,
+        "cardapio": restaurante._cardapio,
+        "total_items": len(cardapio_lista)
+    }
 
 
 # ================================= ROTAS POST =================================
