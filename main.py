@@ -1,20 +1,10 @@
 from fastapi import FastAPI, HTTPException
-from schemas.restaurante import (
-    RestauranteCriar,
-    RestauranteResponse,
-    RestauranteCriadoResponse,
+from schemas import (
+    RestauranteCriar, RestauranteResponse, RestauranteCriadoResponse,
+    BebidaCriar, BebidaResponse,
+    PratoCriar, PratoResponse
 )
-from schemas.bebida import (
-    BebidaCriar,
-    BebidaResponse
-)
-from schemas.prato import(
-    PratoCriar,
-    PratoResponse
-)
-from modelos.restaurante import Restaurante
-from modelos.cardapio.bebida import Bebida
-from modelos.cardapio.prato import Prato
+from modelos import Restaurante, Bebida, Prato
 
 app = FastAPI(title="Tasty Flow API", version="1.0")
 

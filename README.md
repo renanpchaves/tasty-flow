@@ -6,6 +6,7 @@ API REST para gerenciamento de restaurantes, cardápios e avaliações. Desenvol
 ```
 tasty-flow/
 ├── modelos/
+│   ├── __init__.py             # Organização de classes
 │   ├── restaurante.py          # Classe principal de restaurantes
 │   ├── avaliacao.py            # Sistema de avaliações
 │   └── cardapio/
@@ -14,6 +15,7 @@ tasty-flow/
 │       ├── prato.py            # Classes para pratos principais
 │       └── sobremesa.py        # Classes para sobremesas
 ├── schemas/
+│   ├── __init__.py             # Organização de classes
 │   ├── restaurante.py          # Schemas Pydantic (entrada e saída da API)
 │   ├── prato.py                # Schema Pydantic para as rotas de prato principal
 │   └── bebida.py               # Schema Pydantic para as rotas de bebida
