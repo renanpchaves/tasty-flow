@@ -35,10 +35,10 @@ tasty-flow/
 | POST | `/restaurantes/`               | Adiciona um novo restaurante |
 | POST | `/restaurantes/{nome}/cardapio/bebida` | Adiciona bebida |
 | POST | `/restaurantes/{nome}/cardapio/prato` | Adiciona prato | 
-| POST | `/restaurantes/{nome}/cardapio/sobremesa` | Adiciona sobremesa (não implementado) |
+| POST | `/restaurantes/{nome}/cardapio/sobremesa` | Adiciona sobremesa |
 
 
-Ainda construindo mais rotas!
+Ainda construindo mais rotas! A ideia é eventualmente ter consistência de dados na aplicação utilizando MongoDB.
 
 ## 🛠️ Tecnologias
 

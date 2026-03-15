@@ -2,9 +2,9 @@ from fastapi import FastAPI, HTTPException
 from schemas import (
     RestauranteCriar, RestauranteResponse, RestauranteCriadoResponse,
     BebidaCriar, BebidaResponse,
-    PratoCriar, PratoResponse
+    PratoCriar, PratoResponse, SobremesaCriar, SobremesaResponse
 )
-from modelos import Restaurante, Bebida, Prato
+from modelos import Restaurante, Bebida, Prato, Sobremesa
 
 app = FastAPI(title="Tasty Flow API", version="1.0")
 
@@ -15,18 +15,25 @@ app = FastAPI(title="Tasty Flow API", version="1.0")
 @app.get("/")
 def root():
     """
-    Página inicial
+    Página inicial da API
     """
     return {
-        "mensagem": "Api do app Tasty Flow está rodando normalmente.",
+        "mensagem": "API do Tasty Flow está rodando normalmente.",
         "versao": "1.0",
-        "endpoints": [
-            "GET /restaurantes/ - Lista todos os restaurantes",
-            "GET /restaurantes/{nome} - Busca restaurante específico",
-            "POST /restaurantes/ - Cria novo restaurante",
-        ],
+        "documentacao": "/docs",  # ✅ Adicionar link pro Swagger
+        "endpoints": {
+            "restaurantes": [
+                "GET /restaurantes/ - Lista todos os restaurantes",
+                "GET /restaurantes/{nome} - Busca restaurante específico",
+                "POST /restaurantes/ - Cria novo restaurante"
+            ],
+            "cardapio": [
+                "GET /restaurantes/{nome}/cardapio - Lista o cardápio",
+                "POST /restaurantes/{nome}/cardapio/bebida - Adiciona bebida",
+                "POST /restaurantes/{nome}/cardapio/prato - Adiciona prato"
+            ]
+        }
     }
-
 # ===== GET TODOS RESTAURANTES =====
 
 @app.get("/restaurantes/")
@@ -97,6 +104,11 @@ def buscar_cardapio(nome:str):
             item_dict['tipo'] = 'Prato Principal'
             item_dict['descricao'] = item.descricao
             item_dict['categoria'] = item.categoria
+        else:
+            item_dict['tipo'] = 'Sobremesa'
+            item_dict['descricao'] = item.descricao
+            item_dict['tipo'] = item.tipo
+            item_dict['tamanho'] = item.tamanho
         cardapio_lista.append(item_dict)
 
     return {
@@ -172,7 +184,7 @@ def adicionar_bebida(nome:str, bebida_dados: BebidaCriar):
     if not restaurante:
         raise HTTPException(
             status_code=404,
-            detail=f'Restaurante "{nome} não encontrado.'
+            detail=f'Restaurante "{nome}" não encontrado.'
         )
     
     #Cria a bebida
@@ -187,3 +199,30 @@ def adicionar_bebida(nome:str, bebida_dados: BebidaCriar):
     return nova_bebida
 
 # ===== POST SOBREMESA =====
+
+@app.post("/restaurantes/{nome}/cardapio/sobremesa", response_model=SobremesaResponse)
+def adicionar_sobremesa(nome:str, sobremesa_dados: SobremesaCriar):
+    """
+    Adiciona uma sobremesa ao cardápio
+    """
+
+    restaurante = Restaurante.buscar_nome(nome)
+
+    #Validação
+    if not restaurante:
+        raise HTTPException(
+            status_code=404,
+            detail = f'Restaurante "{nome}" não encontrado.'
+        )
+    
+    #Cria a sobremesa
+    nova_sobremesa = Sobremesa(
+        nome = sobremesa_dados.nome,
+        preco = sobremesa_dados.preco,
+        descricao = sobremesa_dados.descricao,
+        tipo = sobremesa_dados.tipo,
+        tamanho = sobremesa_dados.tamanho
+    )
+
+    restaurante.adicionar_no_cardapio(nova_sobremesa)
+    return nova_sobremesa
