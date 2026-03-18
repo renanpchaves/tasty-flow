@@ -25,6 +25,12 @@ tasty-flow/
 └── README.md
 ```
 
+## 📖 Documentação
+
+Acesse a documentação interativa da API:
+- **Swagger UI**: http://localhost:8000/docs
+- **ReDoc**: http://localhost:8000/redoc
+
 ## 🔌 Endpoints
 
 | Método | Endpoint | Descrição |
