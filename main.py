@@ -231,4 +231,26 @@ def adicionar_sobremesa(nome:str, sobremesa_dados: SobremesaCriar):
 # ===== POST AVALIACAO =====
 
 @app.post("/restaurantes/{nome}/avaliacoes")
-def avaliar_restaurante(nome: str, avaliacao, AvaliacaoCriar)
+def avaliar_restaurante(nome: str, avaliacao: AvaliacaoCriar):
+    """
+    Adiciona uma avaliaçao ao restaurante
+    """
+
+    restaurante = Restaurante.buscar_nome(nome)
+
+    #validaçao
+    if not restaurante:
+        raise HTTPException(
+            status_code=404,
+            detail=f'Restaurante "{nome}" não encontrado.'
+        )
+    
+    restaurante.receber_avaliacao(avaliacao.cliente, avaliacao.nota)
+
+    return {
+        "message": "Avaliaçao adicionada com sucesso!",
+        "cliente": avaliacao.cliente,
+        "nota": avaliacao.nota,
+        "nova_media": restaurante.avaliacao_media,
+        "quantidade_avaliacoes": restaurante.avaliacao_total
+    }
