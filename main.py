@@ -252,5 +252,42 @@ def avaliar_restaurante(nome: str, avaliacao: AvaliacaoCriar):
         "cliente": avaliacao.cliente,
         "nota": avaliacao.nota,
         "nova_media": restaurante.avaliacao_media,
-        "quantidade_avaliacoes": restaurante.avaliacao_total
+    }
+
+# ===== GET AVALIACAO =====
+@app.get("/restaurantes/{nome}/avaliacoes")
+def listar_avaliacoes(nome:str):
+    """
+    Lista todas as avaliaçoes do restaurante especifico
+    """
+
+    restaurante = Restaurante.buscar_nome(nome)
+
+    if not restaurante:
+        raise HTTPException(
+            status_code=404,
+            detail=f'Restaurante "{nome}" não encontrado.'
+        )
+    
+    if not restaurante._avaliacao:
+        return{
+            "restaurante": restaurante.nome,
+            "avaliacoes": [],
+            "media": 0.0,
+            "total": 0
+        }
+    
+    avaliacoes_lista = [
+        {
+            "cliente": av.cliente,
+            "nota": av.nota
+        }
+        for av in restaurante._avaliacao
+    ]
+
+    return {
+        "restaurante": restaurante.nome,
+        "avaliacoes": avaliacoes_lista,
+        "media_avaliacoes": restaurante.avaliacao_media,
+        "total_avaliacoes": restaurante.avaliacao_total
     }
