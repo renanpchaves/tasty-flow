@@ -33,10 +33,12 @@ tasty-flow/
 | GET | `/restaurantes/`                | Visualiza restaurantes |
 | GET | `/restaurantes/{nome}`          | Visualiza restaurante por nome |
 | GET | `/restaurantes/{nome}/cardapio` | Visualiza cardápio completo por restaurante |
+| GET | `/restaurantes/{nome}/avaliacoes` | Visualiza todas as avaliaçoes registradas |
 | POST | `/restaurantes/`               | Adiciona um novo restaurante |
 | POST | `/restaurantes/{nome}/cardapio/bebida` | Adiciona bebida |
 | POST | `/restaurantes/{nome}/cardapio/prato` | Adiciona prato | 
 | POST | `/restaurantes/{nome}/cardapio/sobremesa` | Adiciona sobremesa |
+| POST | `/restaurantes/{nome}/avaliacoes` | Adiciona avaliaçao |
 
 
 Ainda construindo mais rotas! A ideia é eventualmente ter consistência de dados na aplicação utilizando MongoDB.
