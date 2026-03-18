@@ -2,6 +2,7 @@ from .restaurante import RestauranteCriar, RestauranteResponse, RestauranteCriad
 from .bebida import BebidaCriar, BebidaResponse
 from .prato import PratoCriar, PratoResponse
 from .sobremesa import SobremesaCriar, SobremesaResponse
+from .avaliacao import AvaliacaoCriar, AvaliacaoResponse
 
 __all__ = [
     'RestauranteCriar',
@@ -12,5 +13,7 @@ __all__ = [
     'PratoCriar',
     'PratoResponse',
     'SobremesaCriar',
-    'SobremesaResponse'
+    'SobremesaResponse',
+    'AvaliacaoCriar',
+    'AvaliacaoResponse',
 ]

@@ -2,7 +2,8 @@ from fastapi import FastAPI, HTTPException
 from schemas import (
     RestauranteCriar, RestauranteResponse, RestauranteCriadoResponse,
     BebidaCriar, BebidaResponse,
-    PratoCriar, PratoResponse, SobremesaCriar, SobremesaResponse
+    PratoCriar, PratoResponse, SobremesaCriar, 
+    SobremesaResponse, AvaliacaoResponse, AvaliacaoCriar
 )
 from modelos import Restaurante, Bebida, Prato, Sobremesa
 
@@ -226,3 +227,8 @@ def adicionar_sobremesa(nome:str, sobremesa_dados: SobremesaCriar):
 
     restaurante.adicionar_no_cardapio(nova_sobremesa)
     return nova_sobremesa
+
+# ===== POST AVALIACAO =====
+
+@app.post("/restaurantes/{nome}/avaliacoes")
+def avaliar_restaurante(nome: str, avaliacao, AvaliacaoCriar)

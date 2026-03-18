@@ -18,7 +18,8 @@ tasty-flow/
 │   ├── __init__.py             # Organização de classes
 │   ├── restaurante.py          # Schemas Pydantic (entrada e saída da API)
 │   ├── prato.py                # Schema Pydantic para as rotas de prato principal
-│   └── bebida.py               # Schema Pydantic para as rotas de bebida
+│   ├── bebida.py               # Schema Pydantic para as rotas de bebida
+│   └── avaliacao.py            # Schema Pydantic para as rotas de avaliação
 │ 
 ├── main.py                     # Aplicação FastAPI
 └── README.md
