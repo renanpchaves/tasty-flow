@@ -1,4 +1,4 @@
-from .restaurante import RestauranteCriar, RestauranteResponse, RestauranteCriadoResponse
+from .restaurante import RestauranteCriar, RestauranteResponse, RestauranteCriadoResponse, RestauranteListaTotal
 from .bebida import BebidaCriar, BebidaResponse
 from .prato import PratoCriar, PratoResponse
 from .sobremesa import SobremesaCriar, SobremesaResponse

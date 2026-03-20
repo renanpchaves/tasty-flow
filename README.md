@@ -45,6 +45,7 @@ Acesse a documentação interativa da API:
 | POST | `/restaurantes/{nome}/cardapio/prato` | Adiciona prato | 
 | POST | `/restaurantes/{nome}/cardapio/sobremesa` | Adiciona sobremesa |
 | POST | `/restaurantes/{nome}/avaliacoes` | Adiciona avaliaçao |
+| PUT | `/restaurantes/{nome}/status` | Altera o status do restaurante entre true e false |
 
 
 Ainda construindo mais rotas! A ideia é eventualmente ter consistência de dados na aplicação utilizando MongoDB.

@@ -3,7 +3,7 @@ from schemas import (
     RestauranteCriar, RestauranteResponse, RestauranteCriadoResponse,
     BebidaCriar, BebidaResponse,
     PratoCriar, PratoResponse, SobremesaCriar, 
-    SobremesaResponse, AvaliacaoResponse, AvaliacaoCriar
+    SobremesaResponse, AvaliacaoResponse, AvaliacaoCriar, RestauranteListaTotal
 )
 from modelos import Restaurante, Bebida, Prato, Sobremesa
 
@@ -21,7 +21,7 @@ def root():
     return {
         "mensagem": "API do Tasty Flow está rodando normalmente.",
         "versao": "1.0",
-        "documentacao": "/docs",  # ✅ Adicionar link pro Swagger
+        "documentacao": "/docs", 
         "endpoints": {
             "restaurantes": [
                 "GET /restaurantes/ - Lista todos os restaurantes",
@@ -32,12 +32,21 @@ def root():
                 "GET /restaurantes/{nome}/cardapio - Lista o cardápio",
                 "POST /restaurantes/{nome}/cardapio/bebida - Adiciona bebida",
                 "POST /restaurantes/{nome}/cardapio/prato - Adiciona prato"
+                "POST /restaurantes/{nome}/cardapio/sobremesa - Adiciona sobremesa"
+            ],
+            "avaliações": [
+                "POST /restaurantes/{nome}/avaliacoes",
+                "GET /restaurantes/{nome}/avaliacoes"
+            ],
+            "status":
+            [
+                "PUT /restaurantes/{nome}/status"
             ]
         }
     }
 # ===== GET TODOS RESTAURANTES =====
 
-@app.get("/restaurantes/")
+@app.get("/restaurantes/", response_model=RestauranteListaTotal)
 def listar_restaurantes():
     """
     Lista todos os restaurantes do app
@@ -45,19 +54,9 @@ def listar_restaurantes():
     if not Restaurante.restaurantes:
         return {"restaurantes": [], "total": 0}
 
-    #lista de restaurantes cadastrados em dicionario:
-    restaurantes_lista = [
-        {
-            "nome": r.nome,
-            "categoria": r.categoria,
-            "ativo": r.ativo,
-            "avalicao_media": r.avaliacao_media,
-            "avaliacao_total": r.avaliacao_total
-        }
-        for r in Restaurante.restaurantes
-    ] 
 
-    return {"restaurantes": restaurantes_lista, "total": len(restaurantes_lista)}
+    return {"restaurantes": Restaurante.restaurantes,
+            "total": len(Restaurante.restaurantes)}
 
 # ===== GET RESTAURANTE POR NOME =====
 
