@@ -51,7 +51,7 @@ def listar_restaurantes():
             "nome": r.nome,
             "categoria": r.categoria,
             "ativo": r.ativo,
-            "avalicao_media": r.avaliacao.media,
+            "avalicao_media": r.avaliacao_media,
             "avaliacao_total": r.avaliacao_total
         }
         for r in Restaurante.restaurantes
@@ -148,12 +148,10 @@ def criar_restaurante(dados: RestauranteCriar):
 
     # Cria o restaurante
     novo_restaurante = Restaurante(dados.nome, dados.categoria, dados.ativo)
-    novo_restaurante._ativo = dados.ativo
  
     return {
         "mensagem": "Restaurante criado com sucesso!",
         "restaurante": novo_restaurante,
-        "status": dados.ativo
     }
 
 # ===== POST PRATO =====
@@ -307,7 +305,7 @@ def listar_avaliacoes(nome:str):
 
 # ================================= ROTAS PUT =================================
 
-@app.put('/restaurantes/{nome}/status')
+@app.put("/restaurantes/{nome}/status")
 def alterar_status(nome:str):
     """
     Altera o status do restaurante: ativo/inativo
@@ -323,6 +321,7 @@ def alterar_status(nome:str):
         )
     
     #Altera o status:
+    restaurante.alterar_status()
     status_texto = "ativo" if restaurante.ativo else "inativo"
 
     return {

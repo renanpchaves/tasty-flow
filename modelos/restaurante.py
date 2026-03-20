@@ -54,7 +54,7 @@ class Restaurante:
     
     # ===== MÉTODOS DE NEGÓCIO =====
 
-    def alternar_estado(self):
+    def alterar_status(self):
         self._ativo = not self._ativo
 
     def receber_avaliacao(self, cliente, nota):
