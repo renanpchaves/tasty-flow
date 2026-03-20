@@ -5,10 +5,10 @@ from modelos.cardapio.item_cardapio import ItemCardapio
 class Restaurante:
     restaurantes = []
 
-    def __init__(self, nome, categoria):
+    def __init__(self, nome, categoria, ativo=False):
         self._nome = nome.title()
         self._categoria = categoria.upper()
-        self._ativo = False
+        self._ativo = ativo
         self._avaliacao = []
         self._cardapio = []
         Restaurante.restaurantes.append(self)

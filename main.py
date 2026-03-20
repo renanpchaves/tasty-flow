@@ -45,7 +45,18 @@ def listar_restaurantes():
     if not Restaurante.restaurantes:
         return {"restaurantes": [], "total": 0}
 
-    restaurantes_lista = Restaurante.restaurantes
+    #lista de restaurantes cadastrados em dicionario:
+    restaurantes_lista = [
+        {
+            "nome": r.nome,
+            "categoria": r.categoria,
+            "ativo": r.ativo,
+            "avalicao_media": r.avaliacao.media,
+            "avaliacao_total": r.avaliacao_total
+        }
+        for r in Restaurante.restaurantes
+    ] 
+
     return {"restaurantes": restaurantes_lista, "total": len(restaurantes_lista)}
 
 # ===== GET RESTAURANTE POR NOME =====
@@ -136,11 +147,13 @@ def criar_restaurante(dados: RestauranteCriar):
         )
 
     # Cria o restaurante
-    novo_restaurante = Restaurante(dados.nome, dados.categoria)
-
+    novo_restaurante = Restaurante(dados.nome, dados.categoria, dados.ativo)
+    novo_restaurante._ativo = dados.ativo
+ 
     return {
         "mensagem": "Restaurante criado com sucesso!",
         "restaurante": novo_restaurante,
+        "status": dados.ativo
     }
 
 # ===== POST PRATO =====
@@ -290,4 +303,29 @@ def listar_avaliacoes(nome:str):
         "avaliacoes": avaliacoes_lista,
         "media_avaliacoes": restaurante.avaliacao_media,
         "total_avaliacoes": restaurante.avaliacao_total
+    }
+
+# ================================= ROTAS PUT =================================
+
+@app.put('/restaurantes/{nome}/status')
+def alterar_status(nome:str):
+    """
+    Altera o status do restaurante: ativo/inativo
+    """
+
+    restaurante = Restaurante.buscar_nome(nome)
+
+    #Validação:
+    if not restaurante:
+        raise HTTPException(
+            status_code=404,
+            detail=f'Restaurante "{nome}" não encontrado.'
+        )
+    
+    #Altera o status:
+    status_texto = "ativo" if restaurante.ativo else "inativo"
+
+    return {
+        "mensagem": f'Status do restaurante "{nome}" alterado com sucesso.',
+        "novo_status": status_texto,
     }
